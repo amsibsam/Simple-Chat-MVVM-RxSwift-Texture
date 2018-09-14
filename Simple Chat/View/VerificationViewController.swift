@@ -20,7 +20,10 @@ class VerificatoinViewController: ASViewController<ASDisplayNode> {
     //MARK: properties
     let disposeBag: DisposeBag
     
+    fileprivate let viewModel: VerificationViewModel
+    
     init() {
+        viewModel = VerificationViewModelImpl(with: VerificationServiceImpl())
         disposeBag = DisposeBag()
         tfCode = ASEditableTextNode()
         btnVerify = ASButtonNode()
@@ -63,6 +66,7 @@ class VerificatoinViewController: ASViewController<ASDisplayNode> {
     //MARK: selector
     @objc func verifyDidTap() {
         print("verify did tap")
+        viewModel.verify(with: tfCode.textView.text!)
     }
     
     //MARK: private func

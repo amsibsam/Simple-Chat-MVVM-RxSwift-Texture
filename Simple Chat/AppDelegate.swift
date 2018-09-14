@@ -31,7 +31,13 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
 //            print("data added \(snapshot)")
 //        }
         // Override point for customization after application launch.
-        setupPreloginWindow()
+        
+        
+        if let user = Auth.auth().currentUser {
+            setupAfterLoginWindow(user: user)
+        } else {
+            setupPreloginWindow()
+        }
         
         return true
     }
@@ -44,8 +50,22 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         IQKeyboardManager.shared().isEnabled = true
     }
     
+    fileprivate func setupAfterLoginWindow(user firebaseUser: User) {
+        let vc: UIViewController!
+        if let _ = firebaseUser.displayName {
+            vc = ChatViewController()
+        } else {
+            vc = ChatViewController()
+        }
+        
+        let nav = UINavigationController(rootViewController: vc)
+        window = UIWindow(frame: UIScreen.main.bounds)
+        window?.rootViewController = nav
+        window?.makeKeyAndVisible()
+    }
+    
     fileprivate func setupPreloginWindow() {
-        let vc = VerificatoinViewController()
+        let vc = LoginViewController()
         
         let nav = UINavigationController(rootViewController: vc)
         window = UIWindow(frame: UIScreen.main.bounds)

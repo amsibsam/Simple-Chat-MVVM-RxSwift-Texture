@@ -9,6 +9,10 @@
 /* Begin PBXBuildFile section */
 		8E043F0D214B52A8007F22B5 /* VerificationViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8E043F0C214B52A8007F22B5 /* VerificationViewModel.swift */; };
 		8E043F0F214B53EE007F22B5 /* VerificationViewModelImpl.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8E043F0E214B53EE007F22B5 /* VerificationViewModelImpl.swift */; };
+		8E043F12214B8A1D007F22B5 /* VerificationService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8E043F11214B8A1D007F22B5 /* VerificationService.swift */; };
+		8E043F14214B8ACA007F22B5 /* VerificationServiceImpl.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8E043F13214B8ACA007F22B5 /* VerificationServiceImpl.swift */; };
+		8E043F16214B9414007F22B5 /* ChatViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8E043F15214B9414007F22B5 /* ChatViewController.swift */; };
+		8E043F18214B9D39007F22B5 /* EditProfileViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8E043F17214B9D39007F22B5 /* EditProfileViewController.swift */; };
 		8E67C7732149FB7A00DB82FC /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = 8E67C7722149FB7900DB82FC /* GoogleService-Info.plist */; };
 		8E67C775214A01AA00DB82FC /* Constant.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8E67C774214A01AA00DB82FC /* Constant.swift */; };
 		8E67C778214A068100DB82FC /* LoginViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8E67C777214A068100DB82FC /* LoginViewController.swift */; };
@@ -31,6 +35,10 @@
 		5FB9B2FCA4BC6579C3C1E2DC /* Pods_Simple_Chat.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_Simple_Chat.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		8E043F0C214B52A8007F22B5 /* VerificationViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = VerificationViewModel.swift; sourceTree = "<group>"; };
 		8E043F0E214B53EE007F22B5 /* VerificationViewModelImpl.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = VerificationViewModelImpl.swift; sourceTree = "<group>"; };
+		8E043F11214B8A1D007F22B5 /* VerificationService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = VerificationService.swift; sourceTree = "<group>"; };
+		8E043F13214B8ACA007F22B5 /* VerificationServiceImpl.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = VerificationServiceImpl.swift; sourceTree = "<group>"; };
+		8E043F15214B9414007F22B5 /* ChatViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ChatViewController.swift; sourceTree = "<group>"; };
+		8E043F17214B9D39007F22B5 /* EditProfileViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EditProfileViewController.swift; sourceTree = "<group>"; };
 		8E67C7722149FB7900DB82FC /* GoogleService-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = "GoogleService-Info.plist"; sourceTree = "<group>"; };
 		8E67C774214A01AA00DB82FC /* Constant.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Constant.swift; sourceTree = "<group>"; };
 		8E67C777214A068100DB82FC /* LoginViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LoginViewController.swift; sourceTree = "<group>"; };
@@ -76,6 +84,15 @@
 				3E539274AEB932DF7E86E371 /* Pods-Simple Chat.release.xcconfig */,
 			);
 			name = Pods;
+			sourceTree = "<group>";
+		};
+		8E043F10214B89B2007F22B5 /* Services */ = {
+			isa = PBXGroup;
+			children = (
+				8E043F11214B8A1D007F22B5 /* VerificationService.swift */,
+				8E043F13214B8ACA007F22B5 /* VerificationServiceImpl.swift */,
+			);
+			path = Services;
 			sourceTree = "<group>";
 		};
 		8E67C776214A067000DB82FC /* Login */ = {
@@ -152,6 +169,7 @@
 		8EE72DF0214B437600013AF4 /* Verification */ = {
 			isa = PBXGroup;
 			children = (
+				8E043F10214B89B2007F22B5 /* Services */,
 				8E043F0C214B52A8007F22B5 /* VerificationViewModel.swift */,
 				8E043F0E214B53EE007F22B5 /* VerificationViewModelImpl.swift */,
 			);
@@ -163,6 +181,8 @@
 			children = (
 				8E67C777214A068100DB82FC /* LoginViewController.swift */,
 				8EE72DF5214B467500013AF4 /* VerificationViewController.swift */,
+				8E043F15214B9414007F22B5 /* ChatViewController.swift */,
+				8E043F17214B9D39007F22B5 /* EditProfileViewController.swift */,
 			);
 			path = View;
 			sourceTree = "<group>";
@@ -310,13 +330,17 @@
 			buildActionMask = 2147483647;
 			files = (
 				8E67C783214A45A400DB82FC /* DataCache.swift in Sources */,
+				8E043F14214B8ACA007F22B5 /* VerificationServiceImpl.swift in Sources */,
 				8ED542D2214668F3001641DA /* AppDelegate.swift in Sources */,
 				8E67C77F214A414C00DB82FC /* LoginService.swift in Sources */,
 				8E043F0D214B52A8007F22B5 /* VerificationViewModel.swift in Sources */,
 				8ED542DA214668F4001641DA /* Simple_Chat.xcdatamodeld in Sources */,
 				8E67C778214A068100DB82FC /* LoginViewController.swift in Sources */,
 				8E67C77B214A0FC000DB82FC /* LoginViewModelImpl.swift in Sources */,
+				8E043F18214B9D39007F22B5 /* EditProfileViewController.swift in Sources */,
 				8EE72DF6214B467500013AF4 /* VerificationViewController.swift in Sources */,
+				8E043F12214B8A1D007F22B5 /* VerificationService.swift in Sources */,
+				8E043F16214B9414007F22B5 /* ChatViewController.swift in Sources */,
 				8E043F0F214B53EE007F22B5 /* VerificationViewModelImpl.swift in Sources */,
 				8EE72DF2214B43AC00013AF4 /* LoginViewModel.swift in Sources */,
 				8E67C775214A01AA00DB82FC /* Constant.swift in Sources */,

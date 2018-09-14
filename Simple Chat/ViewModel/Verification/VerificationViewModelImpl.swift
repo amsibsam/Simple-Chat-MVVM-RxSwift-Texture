@@ -31,9 +31,14 @@ class VerificationViewModelImpl: VerificationViewModel {
     fileprivate let varLoading: BehaviorRelay<Bool> = BehaviorRelay(value: false)
     fileprivate let varErrorMessage: BehaviorRelay<String> = BehaviorRelay(value: "")
     fileprivate let varSuccess: BehaviorRelay<Bool> = BehaviorRelay(value: false)
+    fileprivate let service: VerificationService
+    
+    init(with service: VerificationService) {
+        self.service = service
+    }
     
     //MARK: public func
     func verify(with code: String) {
-        
+        service.verifyLogin(with: code)
     }
 }
