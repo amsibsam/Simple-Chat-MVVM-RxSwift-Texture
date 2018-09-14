@@ -8,6 +8,8 @@
 
 import UIKit
 import CoreData
+import Firebase
+import IQKeyboardManager
 
 @UIApplicationMain
 class AppDelegate: UIResponder, UIApplicationDelegate {
@@ -16,8 +18,39 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
 
 
     func application(_ application: UIApplication, didFinishLaunchingWithOptions launchOptions: [UIApplicationLaunchOptionsKey: Any]?) -> Bool {
+        configureAppDependency()
+////        let message = [
+////            "name": "from apps",
+////            "sender_id": "\(Date().timeIntervalSince1970)",
+////            "text": "send from iPhone second time"
+////        ]
+////        let chatRef = Constant.chatDB.childByAutoId()
+////        chatRef.setValue(message)
+//
+//        Constant.chatDB.observe(.childAdded) { (snapshot) in
+//            print("data added \(snapshot)")
+//        }
         // Override point for customization after application launch.
+        setupPreloginWindow()
+        
         return true
+    }
+    
+    fileprivate func configureAppDependency() {
+        //MARK: Firebase - firebase configuration
+        FirebaseApp.configure()
+        
+        //MARK: IQKeyboardManager - configuration
+        IQKeyboardManager.shared().isEnabled = true
+    }
+    
+    fileprivate func setupPreloginWindow() {
+        let vc = VerificatoinViewController()
+        
+        let nav = UINavigationController(rootViewController: vc)
+        window = UIWindow(frame: UIScreen.main.bounds)
+        window?.rootViewController = nav
+        window?.makeKeyAndVisible()
     }
 
     func applicationWillResignActive(_ application: UIApplication) {

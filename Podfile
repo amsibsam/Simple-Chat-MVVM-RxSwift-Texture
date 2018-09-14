@@ -6,5 +6,21 @@ target 'Simple Chat' do
   use_frameworks!
 
   # Pods for Simple Chat
+  
+  #Rx
+  pod 'RxSwift'
+  pod 'RxCocoa'
+  
+  #Firebase
+  pod 'Firebase/Core'
+  pod 'Firebase/Storage'
+  pod 'Firebase/Auth'
+  pod 'Firebase/Database'
+  
+  #Texture
+  pod 'Texture'
+  
+  #IQKeyboard
+  pod 'IQKeyboardManager'
 
 end

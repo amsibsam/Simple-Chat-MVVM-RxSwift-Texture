@@ -7,12 +7,21 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		8E043F0D214B52A8007F22B5 /* VerificationViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8E043F0C214B52A8007F22B5 /* VerificationViewModel.swift */; };
+		8E043F0F214B53EE007F22B5 /* VerificationViewModelImpl.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8E043F0E214B53EE007F22B5 /* VerificationViewModelImpl.swift */; };
+		8E67C7732149FB7A00DB82FC /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = 8E67C7722149FB7900DB82FC /* GoogleService-Info.plist */; };
+		8E67C775214A01AA00DB82FC /* Constant.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8E67C774214A01AA00DB82FC /* Constant.swift */; };
+		8E67C778214A068100DB82FC /* LoginViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8E67C777214A068100DB82FC /* LoginViewController.swift */; };
+		8E67C77B214A0FC000DB82FC /* LoginViewModelImpl.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8E67C77A214A0FC000DB82FC /* LoginViewModelImpl.swift */; };
+		8E67C77F214A414C00DB82FC /* LoginService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8E67C77E214A414C00DB82FC /* LoginService.swift */; };
+		8E67C783214A45A400DB82FC /* DataCache.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8E67C782214A45A400DB82FC /* DataCache.swift */; };
 		8ED542D2214668F3001641DA /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8ED542D1214668F3001641DA /* AppDelegate.swift */; };
-		8ED542D4214668F4001641DA /* ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8ED542D3214668F4001641DA /* ViewController.swift */; };
 		8ED542D7214668F4001641DA /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 8ED542D5214668F4001641DA /* Main.storyboard */; };
 		8ED542DA214668F4001641DA /* Simple_Chat.xcdatamodeld in Sources */ = {isa = PBXBuildFile; fileRef = 8ED542D8214668F4001641DA /* Simple_Chat.xcdatamodeld */; };
 		8ED542DC21466903001641DA /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 8ED542DB21466903001641DA /* Assets.xcassets */; };
 		8ED542DF21466903001641DA /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 8ED542DD21466903001641DA /* LaunchScreen.storyboard */; };
+		8EE72DF2214B43AC00013AF4 /* LoginViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8EE72DF1214B43AC00013AF4 /* LoginViewModel.swift */; };
+		8EE72DF6214B467500013AF4 /* VerificationViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8EE72DF5214B467500013AF4 /* VerificationViewController.swift */; };
 		E3F236253BBD6FEA96706C24 /* Pods_Simple_Chat.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 5FB9B2FCA4BC6579C3C1E2DC /* Pods_Simple_Chat.framework */; };
 /* End PBXBuildFile section */
 
@@ -20,14 +29,24 @@
 		33ADA3C2114856C2EA8FB7E4 /* Pods-Simple Chat.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Simple Chat.debug.xcconfig"; path = "Pods/Target Support Files/Pods-Simple Chat/Pods-Simple Chat.debug.xcconfig"; sourceTree = "<group>"; };
 		3E539274AEB932DF7E86E371 /* Pods-Simple Chat.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Simple Chat.release.xcconfig"; path = "Pods/Target Support Files/Pods-Simple Chat/Pods-Simple Chat.release.xcconfig"; sourceTree = "<group>"; };
 		5FB9B2FCA4BC6579C3C1E2DC /* Pods_Simple_Chat.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_Simple_Chat.framework; sourceTree = BUILT_PRODUCTS_DIR; };
+		8E043F0C214B52A8007F22B5 /* VerificationViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = VerificationViewModel.swift; sourceTree = "<group>"; };
+		8E043F0E214B53EE007F22B5 /* VerificationViewModelImpl.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = VerificationViewModelImpl.swift; sourceTree = "<group>"; };
+		8E67C7722149FB7900DB82FC /* GoogleService-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = "GoogleService-Info.plist"; sourceTree = "<group>"; };
+		8E67C774214A01AA00DB82FC /* Constant.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Constant.swift; sourceTree = "<group>"; };
+		8E67C777214A068100DB82FC /* LoginViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LoginViewController.swift; sourceTree = "<group>"; };
+		8E67C779214A0F5800DB82FC /* Texture-Header.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "Texture-Header.h"; sourceTree = "<group>"; };
+		8E67C77A214A0FC000DB82FC /* LoginViewModelImpl.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LoginViewModelImpl.swift; sourceTree = "<group>"; };
+		8E67C77E214A414C00DB82FC /* LoginService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LoginService.swift; sourceTree = "<group>"; };
+		8E67C782214A45A400DB82FC /* DataCache.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DataCache.swift; sourceTree = "<group>"; };
 		8ED542CE214668F3001641DA /* Simple Chat.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "Simple Chat.app"; sourceTree = BUILT_PRODUCTS_DIR; };
 		8ED542D1214668F3001641DA /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
-		8ED542D3214668F4001641DA /* ViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ViewController.swift; sourceTree = "<group>"; };
 		8ED542D6214668F4001641DA /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/Main.storyboard; sourceTree = "<group>"; };
 		8ED542D9214668F4001641DA /* Simple_Chat.xcdatamodel */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcdatamodel; path = Simple_Chat.xcdatamodel; sourceTree = "<group>"; };
 		8ED542DB21466903001641DA /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		8ED542DE21466903001641DA /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
 		8ED542E021466903001641DA /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		8EE72DF1214B43AC00013AF4 /* LoginViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LoginViewModel.swift; sourceTree = "<group>"; };
+		8EE72DF5214B467500013AF4 /* VerificationViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = VerificationViewController.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -59,9 +78,43 @@
 			name = Pods;
 			sourceTree = "<group>";
 		};
+		8E67C776214A067000DB82FC /* Login */ = {
+			isa = PBXGroup;
+			children = (
+				8E67C77D214A413000DB82FC /* Services */,
+				8E67C77A214A0FC000DB82FC /* LoginViewModelImpl.swift */,
+				8EE72DF1214B43AC00013AF4 /* LoginViewModel.swift */,
+			);
+			path = Login;
+			sourceTree = "<group>";
+		};
+		8E67C77C214A0FE400DB82FC /* Model */ = {
+			isa = PBXGroup;
+			children = (
+			);
+			path = Model;
+			sourceTree = "<group>";
+		};
+		8E67C77D214A413000DB82FC /* Services */ = {
+			isa = PBXGroup;
+			children = (
+				8E67C77E214A414C00DB82FC /* LoginService.swift */,
+			);
+			path = Services;
+			sourceTree = "<group>";
+		};
+		8E67C780214A458F00DB82FC /* DataManager */ = {
+			isa = PBXGroup;
+			children = (
+				8E67C782214A45A400DB82FC /* DataCache.swift */,
+			);
+			path = DataManager;
+			sourceTree = "<group>";
+		};
 		8ED542C5214668F3001641DA = {
 			isa = PBXGroup;
 			children = (
+				8E67C779214A0F5800DB82FC /* Texture-Header.h */,
 				8ED542D0214668F3001641DA /* Simple Chat */,
 				8ED542CF214668F3001641DA /* Products */,
 				6C5CC52B5E506F2D0A190A5B /* Pods */,
@@ -80,15 +133,47 @@
 		8ED542D0214668F3001641DA /* Simple Chat */ = {
 			isa = PBXGroup;
 			children = (
+				8E67C780214A458F00DB82FC /* DataManager */,
+				8E67C77C214A0FE400DB82FC /* Model */,
+				8EE72DF3214B460700013AF4 /* View */,
+				8EE72DF4214B461C00013AF4 /* ViewModel */,
 				8ED542D1214668F3001641DA /* AppDelegate.swift */,
-				8ED542D3214668F4001641DA /* ViewController.swift */,
 				8ED542D5214668F4001641DA /* Main.storyboard */,
 				8ED542DB21466903001641DA /* Assets.xcassets */,
 				8ED542DD21466903001641DA /* LaunchScreen.storyboard */,
 				8ED542E021466903001641DA /* Info.plist */,
+				8E67C7722149FB7900DB82FC /* GoogleService-Info.plist */,
 				8ED542D8214668F4001641DA /* Simple_Chat.xcdatamodeld */,
+				8E67C774214A01AA00DB82FC /* Constant.swift */,
 			);
 			path = "Simple Chat";
+			sourceTree = "<group>";
+		};
+		8EE72DF0214B437600013AF4 /* Verification */ = {
+			isa = PBXGroup;
+			children = (
+				8E043F0C214B52A8007F22B5 /* VerificationViewModel.swift */,
+				8E043F0E214B53EE007F22B5 /* VerificationViewModelImpl.swift */,
+			);
+			path = Verification;
+			sourceTree = "<group>";
+		};
+		8EE72DF3214B460700013AF4 /* View */ = {
+			isa = PBXGroup;
+			children = (
+				8E67C777214A068100DB82FC /* LoginViewController.swift */,
+				8EE72DF5214B467500013AF4 /* VerificationViewController.swift */,
+			);
+			path = View;
+			sourceTree = "<group>";
+		};
+		8EE72DF4214B461C00013AF4 /* ViewModel */ = {
+			isa = PBXGroup;
+			children = (
+				8EE72DF0214B437600013AF4 /* Verification */,
+				8E67C776214A067000DB82FC /* Login */,
+			);
+			path = ViewModel;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -102,6 +187,7 @@
 				8ED542CA214668F3001641DA /* Sources */,
 				8ED542CB214668F3001641DA /* Frameworks */,
 				8ED542CC214668F3001641DA /* Resources */,
+				67D0C5225C3E69194B9E07DD /* [CP] Embed Pods Frameworks */,
 			);
 			buildRules = (
 			);
@@ -151,6 +237,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				8ED542DF21466903001641DA /* LaunchScreen.storyboard in Resources */,
+				8E67C7732149FB7A00DB82FC /* GoogleService-Info.plist in Resources */,
 				8ED542DC21466903001641DA /* Assets.xcassets in Resources */,
 				8ED542D7214668F4001641DA /* Main.storyboard in Resources */,
 			);
@@ -159,6 +246,44 @@
 /* End PBXResourcesBuildPhase section */
 
 /* Begin PBXShellScriptBuildPhase section */
+		67D0C5225C3E69194B9E07DD /* [CP] Embed Pods Frameworks */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputPaths = (
+				"${SRCROOT}/Pods/Target Support Files/Pods-Simple Chat/Pods-Simple Chat-frameworks.sh",
+				"${BUILT_PRODUCTS_DIR}/GTMSessionFetcher/GTMSessionFetcher.framework",
+				"${BUILT_PRODUCTS_DIR}/GoogleUtilities/GoogleUtilities.framework",
+				"${BUILT_PRODUCTS_DIR}/IQKeyboardManager/IQKeyboardManager.framework",
+				"${BUILT_PRODUCTS_DIR}/PINCache/PINCache.framework",
+				"${BUILT_PRODUCTS_DIR}/PINOperation/PINOperation.framework",
+				"${BUILT_PRODUCTS_DIR}/PINRemoteImage/PINRemoteImage.framework",
+				"${BUILT_PRODUCTS_DIR}/RxCocoa/RxCocoa.framework",
+				"${BUILT_PRODUCTS_DIR}/RxSwift/RxSwift.framework",
+				"${BUILT_PRODUCTS_DIR}/Texture/AsyncDisplayKit.framework",
+				"${BUILT_PRODUCTS_DIR}/leveldb-library/leveldb.framework",
+				"${BUILT_PRODUCTS_DIR}/nanopb/nanopb.framework",
+			);
+			name = "[CP] Embed Pods Frameworks";
+			outputPaths = (
+				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/GTMSessionFetcher.framework",
+				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/GoogleUtilities.framework",
+				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/IQKeyboardManager.framework",
+				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/PINCache.framework",
+				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/PINOperation.framework",
+				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/PINRemoteImage.framework",
+				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/RxCocoa.framework",
+				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/RxSwift.framework",
+				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/AsyncDisplayKit.framework",
+				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/leveldb.framework",
+				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/nanopb.framework",
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "\"${SRCROOT}/Pods/Target Support Files/Pods-Simple Chat/Pods-Simple Chat-frameworks.sh\"\n";
+			showEnvVarsInLog = 0;
+		};
 		AE4E38DAA21ED067224AD746 /* [CP] Check Pods Manifest.lock */ = {
 			isa = PBXShellScriptBuildPhase;
 			buildActionMask = 2147483647;
@@ -184,9 +309,17 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				8ED542D4214668F4001641DA /* ViewController.swift in Sources */,
+				8E67C783214A45A400DB82FC /* DataCache.swift in Sources */,
 				8ED542D2214668F3001641DA /* AppDelegate.swift in Sources */,
+				8E67C77F214A414C00DB82FC /* LoginService.swift in Sources */,
+				8E043F0D214B52A8007F22B5 /* VerificationViewModel.swift in Sources */,
 				8ED542DA214668F4001641DA /* Simple_Chat.xcdatamodeld in Sources */,
+				8E67C778214A068100DB82FC /* LoginViewController.swift in Sources */,
+				8E67C77B214A0FC000DB82FC /* LoginViewModelImpl.swift in Sources */,
+				8EE72DF6214B467500013AF4 /* VerificationViewController.swift in Sources */,
+				8E043F0F214B53EE007F22B5 /* VerificationViewModelImpl.swift in Sources */,
+				8EE72DF2214B43AC00013AF4 /* LoginViewModel.swift in Sources */,
+				8E67C775214A01AA00DB82FC /* Constant.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
