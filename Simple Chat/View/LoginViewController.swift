@@ -56,6 +56,11 @@ class LoginViewController: ASViewController<ASDisplayNode> {
         
         //MARK: lblError config
         lblError.attributedText = NSAttributedString(string: "", attributes: [NSAttributedStringKey.foregroundColor: #colorLiteral(red: 0.9254902005, green: 0.2352941185, blue: 0.1019607857, alpha: 1), NSAttributedStringKey.paragraphStyle: NSTextAlignment.center])
+        
+        //MARK: ivIcon config
+        ivIcon.clipsToBounds = true
+        ivIcon.contentMode = .center
+        ivIcon.image = UIImage(named: "icon_message")
     }
     
     //MARK: lifeCycle
@@ -86,6 +91,7 @@ class LoginViewController: ASViewController<ASDisplayNode> {
         self.node.addSubnode(tfPhoneNumber)
         self.node.addSubnode(btnLogin)
         self.node.addSubnode(lblError)
+        self.node.addSubnode(ivIcon)
         self.node.view.addSubview(loadingIndicator)
         
         setupConstraint()
@@ -121,6 +127,8 @@ class LoginViewController: ASViewController<ASDisplayNode> {
         btnLogin.view.translatesAutoresizingMaskIntoConstraints = false
         tfPhoneNumber.view.translatesAutoresizingMaskIntoConstraints = false
         lblError.view.translatesAutoresizingMaskIntoConstraints = false
+        ivIcon.view.translatesAutoresizingMaskIntoConstraints = false
+        
         NSLayoutConstraint.activate([
             //MARK: tfPhoneNumber constraint
             tfPhoneNumber.view.centerYAnchor.constraint(equalTo: self.node.view.centerYAnchor),
@@ -146,6 +154,12 @@ class LoginViewController: ASViewController<ASDisplayNode> {
             lblError.view.heightAnchor.constraint(equalToConstant: 30),
             lblError.view.leadingAnchor.constraint(equalTo: self.node.view.leadingAnchor, constant: 10),
             lblError.view.trailingAnchor.constraint(equalTo: self.node.view.trailingAnchor, constant: -10),
+            
+            //MARK: ivIcon constraint
+            ivIcon.view.bottomAnchor.constraint(equalTo: self.tfPhoneNumber.view.topAnchor, constant: -50),
+            ivIcon.view.centerXAnchor.constraint(equalTo: self.node.view.centerXAnchor),
+            ivIcon.view.heightAnchor.constraint(equalToConstant: 80),
+            ivIcon.view.widthAnchor.constraint(equalToConstant: 100)
         ])
     }
     
