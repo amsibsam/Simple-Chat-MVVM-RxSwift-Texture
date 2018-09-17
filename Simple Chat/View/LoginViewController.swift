@@ -23,6 +23,7 @@ class LoginViewController: ASViewController<ASDisplayNode> {
     let tfPhoneNumber: ASEditableTextNode
     let lblError: ASTextNode
     let btnLogin: ASButtonNode
+    let ivIcon: ASImageNode
     
     // MARK: properties
     let viewModel: LoginViewModel
@@ -32,6 +33,7 @@ class LoginViewController: ASViewController<ASDisplayNode> {
         tfPhoneNumber = ASEditableTextNode()
         btnLogin = ASButtonNode()
         lblError = ASTextNode()
+        ivIcon = ASImageNode()
         viewModel = LoginViewModelImpl(with: LoginService())
         disposeBag = DisposeBag()
         super.init(node: ASDisplayNode())

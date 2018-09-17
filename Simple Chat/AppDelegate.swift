@@ -30,9 +30,6 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
 //        Constant.chatDB.observe(.childAdded) { (snapshot) in
 //            print("data added \(snapshot)")
 //        }
-        // Override point for customization after application launch.
-        
-        
         if let user = Auth.auth().currentUser {
             setupAfterLoginWindow(user: user)
         } else {
@@ -50,12 +47,12 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         IQKeyboardManager.shared().isEnabled = true
     }
     
-    fileprivate func setupAfterLoginWindow(user firebaseUser: User) {
+    func setupAfterLoginWindow(user firebaseUser: User) {
         let vc: UIViewController!
         if let _ = firebaseUser.displayName {
             vc = ChatViewController()
         } else {
-            vc = ChatViewController()
+            vc = EditProfileViewController()
         }
         
         let nav = UINavigationController(rootViewController: vc)
@@ -64,7 +61,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         window?.makeKeyAndVisible()
     }
     
-    fileprivate func setupPreloginWindow() {
+    func setupPreloginWindow() {
         let vc = LoginViewController()
         
         let nav = UINavigationController(rootViewController: vc)

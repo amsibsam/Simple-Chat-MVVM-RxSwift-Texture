@@ -16,6 +16,7 @@ class VerificatoinViewController: ASViewController<ASDisplayNode> {
     let tfCode: ASEditableTextNode
     let btnVerify: ASButtonNode
     let lblTitle: ASTextNode
+    let loadingIndicator: UIActivityIndicatorView
     
     //MARK: properties
     let disposeBag: DisposeBag
@@ -28,6 +29,7 @@ class VerificatoinViewController: ASViewController<ASDisplayNode> {
         tfCode = ASEditableTextNode()
         btnVerify = ASButtonNode()
         lblTitle = ASTextNode()
+        loadingIndicator = UIActivityIndicatorView(activityIndicatorStyle: .gray)
         super.init(node: ASDisplayNode())
         
         //MARK: tfCode initial config
@@ -77,6 +79,7 @@ class VerificatoinViewController: ASViewController<ASDisplayNode> {
         self.node.addSubnode(tfCode)
         self.node.addSubnode(lblTitle)
         self.node.addSubnode(btnVerify)
+        self.btnVerify.view.addSubview(loadingIndicator)
         
         
         tfCode.layer.cornerRadius = 8
@@ -96,12 +99,19 @@ class VerificatoinViewController: ASViewController<ASDisplayNode> {
                 self.btnVerify.isEnabled = isValid
             })
         }.disposed(by: disposeBag)
+        viewModel.isLoading.drive(loadingIndicator.rx.isAnimating).disposed(by: disposeBag)
+        viewModel.isSuccess.drive(onNext: { (user) in
+            if let loggedInUser = user {
+                UIApplication.app.setupAfterLoginWindow(user: loggedInUser)
+            }
+        }).disposed(by: disposeBag)
     }
     
     fileprivate func setupConstraint() {
         tfCode.view.translatesAutoresizingMaskIntoConstraints = false
         btnVerify.view.translatesAutoresizingMaskIntoConstraints = false
         lblTitle.view.translatesAutoresizingMaskIntoConstraints = false
+        loadingIndicator.translatesAutoresizingMaskIntoConstraints = false
         
         NSLayoutConstraint.activate([
             //MARK: tfCode constraint
@@ -120,8 +130,13 @@ class VerificatoinViewController: ASViewController<ASDisplayNode> {
             lblTitle.view.centerXAnchor.constraint(equalTo: self.node.view.centerXAnchor),
             lblTitle.view.centerYAnchor.constraint(equalTo: self.node.view.centerYAnchor, constant: -100),
             lblTitle.view.widthAnchor.constraint(equalTo: self.tfCode.view.widthAnchor),
-            lblTitle.view.heightAnchor.constraint(equalToConstant: 100)
+            lblTitle.view.heightAnchor.constraint(equalToConstant: 100),
             
+            //MARK: loadingIndicator constraint
+            loadingIndicator.centerXAnchor.constraint(equalTo: btnVerify.view.centerXAnchor),
+            loadingIndicator.centerYAnchor.constraint(equalTo: btnVerify.view.centerYAnchor),
+            loadingIndicator.widthAnchor.constraint(equalToConstant: 30),
+            loadingIndicator.heightAnchor.constraint(equalToConstant: 30)
         ])
     }
     

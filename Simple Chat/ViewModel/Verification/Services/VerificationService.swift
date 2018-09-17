@@ -7,7 +7,9 @@
 //
 
 import Foundation
+import RxSwift
+import Firebase
 
 protocol VerificationService: class {
-    func verifyLogin(with code: String)
+    func verifyLogin(with code: String) -> Single<User?>
 }

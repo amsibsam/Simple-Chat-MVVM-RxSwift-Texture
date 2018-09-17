@@ -8,6 +8,7 @@
 
 import Foundation
 import RxCocoa
+import Firebase
 
 protocol VerificationViewModel: class {
     //MARK: binding variable
@@ -19,7 +20,7 @@ protocol VerificationViewModel: class {
     var errorMessage: Driver<String> { get }
     
     /// verification success status binding
-    var isSuccess: Driver<Bool> { get }
+    var isSuccess: Driver<User?> { get }
     
     //MARK: public function
     
