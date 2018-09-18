@@ -12,16 +12,16 @@ import RxCocoa
 import AsyncDisplayKit
 
 class VerificatoinViewController: ASViewController<ASDisplayNode> {
-    //MARK: View component
+    // MARK: View component
     let tfCode: ASEditableTextNode
     let btnVerify: ASButtonNode
     let lblTitle: ASTextNode
     let loadingIndicator: UIActivityIndicatorView
     
-    //MARK: properties
+    // MARK: properties
     let disposeBag: DisposeBag
     
-    fileprivate let viewModel: VerificationViewModel
+    private let viewModel: VerificationViewModel
     
     init() {
         viewModel = VerificationViewModelImpl(with: VerificationServiceImpl())
@@ -32,7 +32,7 @@ class VerificatoinViewController: ASViewController<ASDisplayNode> {
         loadingIndicator = UIActivityIndicatorView(activityIndicatorStyle: .gray)
         super.init(node: ASDisplayNode())
         
-        //MARK: tfCode initial config
+        // MARK: tfCode initial config
         let paragraphStyle = NSMutableParagraphStyle()
         paragraphStyle.alignment = .center
         tfCode.attributedPlaceholderText = NSAttributedString(string: "Verification Code", attributes: [NSAttributedStringKey.foregroundColor : #colorLiteral(red: 0.8039215803, green: 0.8039215803, blue: 0.8039215803, alpha: 1), NSAttributedStringKey.paragraphStyle: paragraphStyle])
@@ -41,7 +41,7 @@ class VerificatoinViewController: ASViewController<ASDisplayNode> {
         tfCode.clipsToBounds = true
         tfCode.backgroundColor = #colorLiteral(red: 0.2549019754, green: 0.2745098174, blue: 0.3019607961, alpha: 1)
         
-        //MARK: btnVerify initial config
+        // MARK: btnVerify initial config
         btnVerify.setTitle("Verify", with: UIFont.systemFont(ofSize: 14), with: #colorLiteral(red: 0.501960814, green: 0.501960814, blue: 0.501960814, alpha: 1), for: .disabled)
         btnVerify.setTitle("Verify", with: UIFont.systemFont(ofSize: 14), with: #colorLiteral(red: 1, green: 1, blue: 1, alpha: 1), for: .normal)
         btnVerify.setTitle("Verify", with: UIFont.systemFont(ofSize: 14), with: #colorLiteral(red: 0.721568644, green: 0.8862745166, blue: 0.5921568871, alpha: 1), for: .highlighted)
@@ -49,7 +49,7 @@ class VerificatoinViewController: ASViewController<ASDisplayNode> {
         btnVerify.isEnabled = false
         btnVerify.addTarget(self, action: #selector(VerificatoinViewController.verifyDidTap), forControlEvents: .touchUpInside)
         
-        //MARK: lblTitle initial config
+        // MARK: lblTitle initial config
         lblTitle.attributedText = NSAttributedString(string: "Please enter verification code that has been sent to your phone number", attributes: [
             NSAttributedStringKey.foregroundColor : #colorLiteral(red: 0.2549019754, green: 0.2745098174, blue: 0.3019607961, alpha: 1),
             NSAttributedStringKey.paragraphStyle: paragraphStyle,
@@ -65,15 +65,15 @@ class VerificatoinViewController: ASViewController<ASDisplayNode> {
         
     }
     
-    //MARK: selector
+    // MARK: selector
     @objc func verifyDidTap() {
         print("verify did tap")
         viewModel.verify(with: tfCode.textView.text!)
     }
     
-    //MARK: private func
+    // MARK: private func
     
-    fileprivate func setupUI() {
+    private func setupUI() {
         self.navigationController?.navigationBar.isTranslucent = false
         self.node.backgroundColor = .white
         self.node.addSubnode(tfCode)
@@ -81,18 +81,16 @@ class VerificatoinViewController: ASViewController<ASDisplayNode> {
         self.node.addSubnode(btnVerify)
         self.btnVerify.view.addSubview(loadingIndicator)
         
-        
         tfCode.layer.cornerRadius = 8
         
         btnVerify.layer.cornerRadius = 8
         btnVerify.layer.borderWidth = 2
         btnVerify.layer.borderColor = #colorLiteral(red: 0.5843137503, green: 0.8235294223, blue: 0.4196078479, alpha: 1).cgColor
         
-        
         setupConstraint()
     }
     
-    fileprivate func bindModelToView() {
+    private func bindModelToView() {
         tfCode.textView.rx.text.orEmpty.map { $0.count > 3 }.bind { [unowned self] (isValid) in
             UIView.animate(withDuration: 0.3, animations: {
                 self.btnVerify.backgroundColor = isValid ? #colorLiteral(red: 0.5843137503, green: 0.8235294223, blue: 0.4196078479, alpha: 1) : #colorLiteral(red: 1, green: 1, blue: 1, alpha: 1)
@@ -102,44 +100,43 @@ class VerificatoinViewController: ASViewController<ASDisplayNode> {
         viewModel.isLoading.drive(loadingIndicator.rx.isAnimating).disposed(by: disposeBag)
         viewModel.isSuccess.drive(onNext: { (user) in
             if let loggedInUser = user {
-                UIApplication.app.setupAfterLoginWindow(user: loggedInUser)
+                UIApplication.app?.setupAfterLoginWindow(user: loggedInUser)
             }
         }).disposed(by: disposeBag)
     }
     
-    fileprivate func setupConstraint() {
+    private func setupConstraint() {
         tfCode.view.translatesAutoresizingMaskIntoConstraints = false
         btnVerify.view.translatesAutoresizingMaskIntoConstraints = false
         lblTitle.view.translatesAutoresizingMaskIntoConstraints = false
         loadingIndicator.translatesAutoresizingMaskIntoConstraints = false
         
         NSLayoutConstraint.activate([
-            //MARK: tfCode constraint
+            // MARK: tfCode constraint
             tfCode.view.centerXAnchor.constraint(equalTo: self.node.view.centerXAnchor),
             tfCode.view.centerYAnchor.constraint(equalTo: self.node.view.centerYAnchor),
             tfCode.view.widthAnchor.constraint(equalToConstant: 250),
             tfCode.view.heightAnchor.constraint(equalToConstant: 35),
             
-            //MARK: btnVerify constraint
+            // MARK: btnVerify constraint
             btnVerify.view.centerXAnchor.constraint(equalTo: self.node.view.centerXAnchor),
             btnVerify.view.centerYAnchor.constraint(equalTo: self.node.view.centerYAnchor, constant: 50),
             btnVerify.view.widthAnchor.constraint(equalTo: tfCode.view.widthAnchor),
             btnVerify.view.heightAnchor.constraint(equalTo: tfCode.view.heightAnchor),
             
-            //MARK: lblTitle constraint
+            // MARK: lblTitle constraint
             lblTitle.view.centerXAnchor.constraint(equalTo: self.node.view.centerXAnchor),
             lblTitle.view.centerYAnchor.constraint(equalTo: self.node.view.centerYAnchor, constant: -100),
             lblTitle.view.widthAnchor.constraint(equalTo: self.tfCode.view.widthAnchor),
             lblTitle.view.heightAnchor.constraint(equalToConstant: 100),
             
-            //MARK: loadingIndicator constraint
+            // MARK: loadingIndicator constraint
             loadingIndicator.centerXAnchor.constraint(equalTo: btnVerify.view.centerXAnchor),
             loadingIndicator.centerYAnchor.constraint(equalTo: btnVerify.view.centerYAnchor),
             loadingIndicator.widthAnchor.constraint(equalToConstant: 30),
             loadingIndicator.heightAnchor.constraint(equalToConstant: 30)
         ])
     }
-    
     
     required init?(coder aDecoder: NSCoder) {
         fatalError()

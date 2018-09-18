@@ -10,15 +10,7 @@ import Foundation
 import Firebase
 
 class Constant {
-    static var rootDB: DatabaseReference {
-        get {
-            return Database.database().reference()
-        }
-    }
+    static let rootDB: DatabaseReference = Database.database().reference()
     
-    static var chatDB: DatabaseReference {
-        get {
-            return rootDB.child("chats")
-        }
-    }
+    static var chatDB: DatabaseReference = rootDB.child("chats")
 }

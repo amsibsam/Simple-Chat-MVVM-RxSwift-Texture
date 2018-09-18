@@ -35,10 +35,10 @@ class LoginViewModelImpl: LoginViewModel {
     }
     
     // MARK: private properties
-    fileprivate let varLoading: BehaviorRelay<Bool> = BehaviorRelay(value: false)
-    fileprivate let varError: BehaviorRelay<String> = BehaviorRelay(value: "")
-    fileprivate let varSuccess: BehaviorRelay<Bool> = BehaviorRelay(value: false)
-    fileprivate lazy var disposeBag: DisposeBag = {
+    private let varLoading: BehaviorRelay<Bool> = BehaviorRelay(value: false)
+    private let varError: BehaviorRelay<String> = BehaviorRelay(value: "")
+    private let varSuccess: BehaviorRelay<Bool> = BehaviorRelay(value: false)
+    private lazy var disposeBag: DisposeBag = {
         return DisposeBag()
     }()
     
@@ -53,15 +53,14 @@ class LoginViewModelImpl: LoginViewModel {
             .login(with: phoneNumber)
             .subscribeOn(ConcurrentDispatchQueueScheduler(qos: .background))
             .observeOn(MainScheduler.instance)
-            .subscribe(onSuccess: { [unowned self] (success) in
+            .subscribe(onSuccess: { (success) in
                 self.varLoading.accept(false)
                 if success {
-                    
                     self.varSuccess.accept(true)
                 }
-            }) { (error) in
+            }, onError: { (error) in
                 self.varLoading.accept(false)
                 self.varError.accept(error.localizedDescription)
-            }.disposed(by: disposeBag)
+            }).disposed(by: disposeBag)
     }
 }

@@ -10,7 +10,8 @@ import Foundation
 import UIKit
 
 extension UIApplication {
-    static var app: AppDelegate {
-        return UIApplication.shared.delegate as! AppDelegate
+    static var app: AppDelegate? {
+        guard let appDelegate = UIApplication.shared.delegate as? AppDelegate else { return nil }
+        return appDelegate
     }
 }

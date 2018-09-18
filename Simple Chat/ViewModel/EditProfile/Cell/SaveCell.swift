@@ -43,13 +43,13 @@ class SaveCell: ASCellNode {
         
     }
     
-    fileprivate func configureConstrain() {
+    private func configureConstrain() {
         NSLayoutConstraint.activate([
-            //MARK: loadingIndicator constraint
+            // MARK: loadingIndicator constraint
             loadingIndicator.centerYAnchor.constraint(equalTo: btnSave.view.centerYAnchor),
             loadingIndicator.centerXAnchor.constraint(equalTo: btnSave.view.centerXAnchor),
             loadingIndicator.widthAnchor.constraint(equalToConstant: 30),
-            loadingIndicator.heightAnchor.constraint(equalToConstant: 30),
+            loadingIndicator.heightAnchor.constraint(equalToConstant: 30)
         ])
     }
     
@@ -64,7 +64,7 @@ class SaveCell: ASCellNode {
         return ASInsetLayoutSpec(insets: UIEdgeInsets(top: 8, left: 30, bottom: 8, right: 30), child: verticalLayout)
     }
     
-    //MARK: selector
+    // MARK: selector
     @objc func saveDidTap() {
         behaviorTap.accept(())
     }

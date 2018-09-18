@@ -33,8 +33,8 @@ class EditProfileViewController: ASViewController<ASDisplayNode> {
         bindModelToView()
     }
     
-    //MARK: private func
-    fileprivate func setupUI() {
+    // MARK: private func
+    private func setupUI() {
         self.navigationController?.navigationBar.isTranslucent = false
         self.title = "Edit Profile"
         self.node.backgroundColor = .white
@@ -44,7 +44,7 @@ class EditProfileViewController: ASViewController<ASDisplayNode> {
         configureTableView()
     }
     
-    fileprivate func bindModelToView() {
+    private func bindModelToView() {
         viewModel.getMenu()
         viewModel.menu.asObservable()
             .subscribeOn(MainScheduler.instance)
@@ -54,25 +54,25 @@ class EditProfileViewController: ASViewController<ASDisplayNode> {
             }).disposed(by: disposeBag)
         viewModel.isSuccess.drive(onNext: { (user) in
             if let updatedUser = user {
-                UIApplication.app.setupAfterLoginWindow(user: updatedUser)
+                UIApplication.app?.setupAfterLoginWindow(user: updatedUser)
             } else {
                 print("error complete profile ")
             }
         }).disposed(by: disposeBag)
     }
     
-    fileprivate func configureTableView() {
+    private func configureTableView() {
         tableNode.delegate = self
         tableNode.dataSource = self
         tableNode.view.separatorStyle = .none
         tableNode.view.tableFooterView = UIView()
     }
     
-    fileprivate func setupConstraint() {
+    private func setupConstraint() {
         tableNode.view.translatesAutoresizingMaskIntoConstraints = false
         inputContainer.view.translatesAutoresizingMaskIntoConstraints = false
         NSLayoutConstraint.activate([
-            //MARK: tableView constraint
+            // MARK: tableView constraint
             tableNode.view.leadingAnchor.constraint(equalTo: self.node.view.leadingAnchor),
             tableNode.view.trailingAnchor.constraint(equalTo: self.node.view.trailingAnchor),
             tableNode.view.topAnchor.constraint(equalTo: self.node.view.topAnchor),

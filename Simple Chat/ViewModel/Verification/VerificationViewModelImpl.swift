@@ -28,18 +28,18 @@ class VerificationViewModelImpl: VerificationViewModel {
         }
     }
     
-    //MARK: private properties
-    fileprivate let varLoading: BehaviorRelay<Bool> = BehaviorRelay(value: false)
-    fileprivate let varErrorMessage: BehaviorRelay<String> = BehaviorRelay(value: "")
-    fileprivate let varSuccess: BehaviorRelay<User?> = BehaviorRelay(value: nil)
-    fileprivate let service: VerificationService
-    fileprivate let disposeBag: DisposeBag = DisposeBag()
+    // MARK: private properties
+    private let varLoading: BehaviorRelay<Bool> = BehaviorRelay(value: false)
+    private let varErrorMessage: BehaviorRelay<String> = BehaviorRelay(value: "")
+    private let varSuccess: BehaviorRelay<User?> = BehaviorRelay(value: nil)
+    private let service: VerificationService
+    private let disposeBag: DisposeBag = DisposeBag()
     
     init(with service: VerificationService) {
         self.service = service
     }
     
-    //MARK: public func
+    // MARK: public func
     func verify(with code: String) {
         varLoading.accept(true)
         service.verifyLogin(with: code)
@@ -48,9 +48,9 @@ class VerificationViewModelImpl: VerificationViewModel {
             .subscribe(onSuccess: { [weak self] (user) in
                 self?.varLoading.accept(false)
                 self?.varSuccess.accept(user)
-            }) { [weak self] (error) in
-                self?.varLoading.accept(false)
-                self?.varErrorMessage.accept(error.localizedDescription)
-            }.disposed(by: disposeBag)
+                }, onError: { [weak self] (error) in
+                    self?.varLoading.accept(false)
+                    self?.varErrorMessage.accept(error.localizedDescription)
+            }).disposed(by: disposeBag)
     }
 }

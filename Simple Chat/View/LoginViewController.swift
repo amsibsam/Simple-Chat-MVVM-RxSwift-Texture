@@ -38,7 +38,7 @@ class LoginViewController: ASViewController<ASDisplayNode> {
         disposeBag = DisposeBag()
         super.init(node: ASDisplayNode())
         
-        //MARK: tfPhoneNumber config
+        // MARK: tfPhoneNumber config
         tfPhoneNumber.clipsToBounds = true
         tfPhoneNumber.backgroundColor = .white
         tfPhoneNumber.keyboardType = .phonePad
@@ -46,7 +46,7 @@ class LoginViewController: ASViewController<ASDisplayNode> {
         tfPhoneNumber.attributedPlaceholderText = NSAttributedString(string: "+62 Phone Number..", attributes: [NSAttributedStringKey.foregroundColor: #colorLiteral(red: 0.8039215803, green: 0.8039215803, blue: 0.8039215803, alpha: 1)])
         tfPhoneNumber.textContainerInset = UIEdgeInsets(top: 10, left: 10, bottom: 3, right: 10)
         
-        //MARK: btnLogin config
+        // MARK: btnLogin config
         btnLogin.setTitle("Login", with: UIFont.systemFont(ofSize: 12), with: .blue, for: .normal)
         btnLogin.setTitle("Login", with: UIFont.systemFont(ofSize: 12), with: .white, for: .highlighted)
         btnLogin.setTitle("", with: nil, with: .white, for: .disabled)
@@ -54,29 +54,29 @@ class LoginViewController: ASViewController<ASDisplayNode> {
         btnLogin.backgroundColor = .white
         btnLogin.clipsToBounds = true
         
-        //MARK: lblError config
+        // MARK: lblError config
         lblError.attributedText = NSAttributedString(string: "", attributes: [NSAttributedStringKey.foregroundColor: #colorLiteral(red: 0.9254902005, green: 0.2352941185, blue: 0.1019607857, alpha: 1), NSAttributedStringKey.paragraphStyle: NSTextAlignment.center])
         
-        //MARK: ivIcon config
+        // MARK: ivIcon config
         ivIcon.clipsToBounds = true
         ivIcon.contentMode = .center
         ivIcon.image = UIImage(named: "icon_message")
     }
     
-    //MARK: lifeCycle
+    // MARK: lifeCycle
     override func viewDidLoad() {
         super.viewDidLoad()
         setupUI()
         bindModelToView()
     }
     
-    //MARK: selector
+    // MARK: selector
     @objc func loginDidTap() {
         viewModel.login(with: tfPhoneNumber.textView.text!)
     }
     
-    //MARK: private
-    fileprivate func setupUI() {
+    // MARK: private
+    private func setupUI() {
         self.navigationController?.navigationBar.isHidden = true
         
         tfPhoneNumber.layer.cornerRadius = 8
@@ -97,7 +97,7 @@ class LoginViewController: ASViewController<ASDisplayNode> {
         setupConstraint()
     }
     
-    fileprivate func bindModelToView() {
+    private func bindModelToView() {
         viewModel.isLoading.drive(onNext: { [unowned self] isLoading in
             isLoading ? self.loadingIndicator.startAnimating() : self.loadingIndicator.stopAnimating()
             self.btnLogin.isEnabled = !isLoading
@@ -116,46 +116,46 @@ class LoginViewController: ASViewController<ASDisplayNode> {
         }).disposed(by: disposeBag)
     }
     
-    fileprivate func setupGradientColor() {
+    private func setupGradientColor() {
         let layer = CAGradientLayer()
         layer.frame = self.view.bounds
         layer.colors = [#colorLiteral(red: 0.2392156869, green: 0.6745098233, blue: 0.9686274529, alpha: 1).cgColor, #colorLiteral(red: 0.09469399931, green: 0.9547344689, blue: 0.9686274529, alpha: 1).cgColor]
         self.view.layer.insertSublayer(layer, at: 0)
     }
     
-    fileprivate func setupConstraint() {
+    private func setupConstraint() {
         btnLogin.view.translatesAutoresizingMaskIntoConstraints = false
         tfPhoneNumber.view.translatesAutoresizingMaskIntoConstraints = false
         lblError.view.translatesAutoresizingMaskIntoConstraints = false
         ivIcon.view.translatesAutoresizingMaskIntoConstraints = false
         
         NSLayoutConstraint.activate([
-            //MARK: tfPhoneNumber constraint
+            // MARK: tfPhoneNumber constraint
             tfPhoneNumber.view.centerYAnchor.constraint(equalTo: self.node.view.centerYAnchor),
             tfPhoneNumber.view.centerXAnchor.constraint(equalTo: self.node.view.centerXAnchor),
             tfPhoneNumber.view.heightAnchor.constraint(equalToConstant: 35),
             tfPhoneNumber.view.widthAnchor.constraint(equalToConstant: 250),
             
-            //MARK: btnLogin constraint
+            // MARK: btnLogin constraint
             btnLogin.view.centerXAnchor.constraint(equalTo: self.node.view.centerXAnchor),
             btnLogin.view.centerYAnchor.constraint(equalTo: self.node.view.centerYAnchor, constant: 50),
             btnLogin.view.heightAnchor.constraint(equalToConstant: 35),
             btnLogin.view.widthAnchor.constraint(equalTo: tfPhoneNumber.view.widthAnchor),
             
-            //MARK: loadingIndicator constraint
+            // MARK: loadingIndicator constraint
             loadingIndicator.centerXAnchor.constraint(equalTo: self.view.centerXAnchor),
             loadingIndicator.centerYAnchor.constraint(equalTo: btnLogin.view.centerYAnchor),
             loadingIndicator.heightAnchor.constraint(equalToConstant: 30),
             loadingIndicator.widthAnchor.constraint(equalToConstant: 30),
             
-            //MARK: lblError constraint
+            // MARK: lblError constraint
             lblError.view.centerXAnchor.constraint(equalTo: self.node.view.centerXAnchor),
             lblError.view.centerYAnchor.constraint(equalTo: tfPhoneNumber.view.centerYAnchor, constant: -50),
             lblError.view.heightAnchor.constraint(equalToConstant: 30),
             lblError.view.leadingAnchor.constraint(equalTo: self.node.view.leadingAnchor, constant: 10),
             lblError.view.trailingAnchor.constraint(equalTo: self.node.view.trailingAnchor, constant: -10),
             
-            //MARK: ivIcon constraint
+            // MARK: ivIcon constraint
             ivIcon.view.bottomAnchor.constraint(equalTo: self.tfPhoneNumber.view.topAnchor, constant: -50),
             ivIcon.view.centerXAnchor.constraint(equalTo: self.node.view.centerXAnchor),
             ivIcon.view.heightAnchor.constraint(equalToConstant: 80),

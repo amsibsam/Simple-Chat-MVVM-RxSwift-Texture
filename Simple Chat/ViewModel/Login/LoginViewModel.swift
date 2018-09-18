@@ -11,7 +11,7 @@ import RxSwift
 import RxCocoa
 
 protocol LoginViewModel: class {
-    //MARK: binding variable
+    // MARK: binding variable
     
     /// login loading status binding
     var isLoading: Driver<Bool> { get }
@@ -22,7 +22,7 @@ protocol LoginViewModel: class {
     /// login success status binding
     var isSuccess: Driver<Bool> { get }
     
-    //MARK: public function
+    // MARK: public function
     
     /// login with phone number
     ///

@@ -49,7 +49,6 @@ class ProfileFieldCell: ASCellNode {
         tfFieldValue.style.width = ASDimensionMake("100%")
         verticalStackSpec.children = [lblFieldTitle, tfFieldValue]
         
-        
         return ASInsetLayoutSpec(insets: UIEdgeInsets(top: 10, left: 30, bottom: 10, right: 30), child: verticalStackSpec)
     }
 }

@@ -28,10 +28,10 @@ class EditProfileViewModelImpl: EditProfileViewModel {
         }
     }
     
-    //MARK: private properties
-    fileprivate let varMenu: BehaviorRelay<[MenuModel]> = BehaviorRelay(value: [])
-    fileprivate let varLoading: BehaviorRelay<Bool> = BehaviorRelay(value: false)
-    fileprivate let varSuccess: BehaviorRelay<User?> = BehaviorRelay(value: nil)
+    // MARK: private properties
+    private let varMenu: BehaviorRelay<[MenuModel]> = BehaviorRelay(value: [])
+    private let varLoading: BehaviorRelay<Bool> = BehaviorRelay(value: false)
+    private let varSuccess: BehaviorRelay<User?> = BehaviorRelay(value: nil)
     private var isUpdateNameComplete: Bool = false
     private var isUpdateEmailComplete: Bool = false
     

@@ -11,7 +11,7 @@ import RxCocoa
 import Firebase
 
 protocol VerificationViewModel: class {
-    //MARK: binding variable
+    // MARK: binding variable
     
     /// verification loading status binding
     var isLoading: Driver<Bool> { get }
@@ -22,7 +22,7 @@ protocol VerificationViewModel: class {
     /// verification success status binding
     var isSuccess: Driver<User?> { get }
     
-    //MARK: public function
+    // MARK: public function
     
     /// verify login with code
     ///

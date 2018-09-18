@@ -253,6 +253,7 @@
 				8ED542CB214668F3001641DA /* Frameworks */,
 				8ED542CC214668F3001641DA /* Resources */,
 				67D0C5225C3E69194B9E07DD /* [CP] Embed Pods Frameworks */,
+				8EBC0FB921508D71007C11BF /* ShellScript */,
 			);
 			buildRules = (
 			);
@@ -348,6 +349,19 @@
 			shellPath = /bin/sh;
 			shellScript = "\"${SRCROOT}/Pods/Target Support Files/Pods-Simple Chat/Pods-Simple Chat-frameworks.sh\"\n";
 			showEnvVarsInLog = 0;
+		};
+		8EBC0FB921508D71007C11BF /* ShellScript */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputPaths = (
+			);
+			outputPaths = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "if which swiftlint >/dev/null; then\n    swiftlint\nelse\n    echo \"warning: SwiftLint not installed, download from https://github.com/realm/SwiftLint\"\nfi";
 		};
 		AE4E38DAA21ED067224AD746 /* [CP] Check Pods Manifest.lock */ = {
 			isa = PBXShellScriptBuildPhase;
