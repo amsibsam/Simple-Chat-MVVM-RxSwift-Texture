@@ -17,16 +17,38 @@ class ChatViewController: ASViewController<ASDisplayNode> {
     let tfInputNode: ASEditableTextNode
     let btnSend: ASButtonNode
     
+    // MARK: private properties
+    private let disposeBage: DisposeBag
+    private var inputContainerHeightConstraint: NSLayoutConstraint?
     init() {
+        disposeBage = DisposeBag()
         tableNode = ASTableNode()
         inputContainerNode = ASDisplayNode()
         tfInputNode = ASEditableTextNode()
         btnSend = ASButtonNode()
         
         super.init(node: ASDisplayNode())
+        // MARK: node container config
         self.node.backgroundColor = .white
+        
+        // MARK: tableNode config
         tableNode.backgroundColor = .white
+        tableNode.view.separatorStyle = .none
+        
+        // MARK: inputContainerNode config
         inputContainerNode.backgroundColor = .gray
+        
+        // MARK: tfIniputNode config
+        tfInputNode.attributedPlaceholderText = NSAttributedString(string: "Type something..", attributes: [NSAttributedStringKey.foregroundColor : #colorLiteral(red: 0.8039215803, green: 0.8039215803, blue: 0.8039215803, alpha: 1), NSAttributedStringKey.font: UIFont.systemFont(ofSize: 16)])
+        tfInputNode.typingAttributes = [NSAttributedStringKey.font.rawValue: UIFont.systemFont(ofSize: 16), NSAttributedStringKey.foregroundColor.rawValue: UIColor.black]
+        tfInputNode.backgroundColor = .white
+        tfInputNode.textContainerInset = UIEdgeInsets(top: 3, left: 8, bottom: 3, right: 8)
+        tfInputNode.clipsToBounds = true
+        
+        // MARK: btnSend config
+        btnSend.setImage(UIImage(named: "ic_send_white"), for: .normal)
+        btnSend.setImage(UIImage(named: "ic_send_black"), for: .highlighted)
+        btnSend.addTarget(self, action: #selector(ChatViewController.sendDidTap), forControlEvents: .touchUpInside)
     }
     
     override func viewDidLoad() {
@@ -34,9 +56,42 @@ class ChatViewController: ASViewController<ASDisplayNode> {
         setupUI()
     }
     
+    // MARK: selector
+    @objc func sendDidTap() {
+        print("send message")
+    }
+    
+    // MARK: private function
     private func setupUI() {
         self.title = "Conversation"
+        tableNode.view.tableFooterView = UIView()
+        tfInputNode.layer.cornerRadius = 10
+        
+        self.node.addSubnode(tableNode)
+        self.node.addSubnode(inputContainerNode)
+        inputContainerNode.addSubnode(tfInputNode)
+        inputContainerNode.addSubnode(btnSend)
         setupConstraint()
+        configureInputTextBehavior()
+    }
+    
+    private func configureInputTextBehavior() {
+        tfInputNode.textView.rx.text.orEmpty.asDriver().skip(1).drive(onNext: { [unowned self] (_) in
+            UIView.animate(withDuration: 0.2, animations: {
+                self.tfInputNode.frame = self.calculateHeight().input
+                self.inputContainerNode.frame = self.calculateHeight().container
+                self.inputContainerHeightConstraint?.constant = self.calculateHeight().container.height
+            })
+        }).disposed(by: disposeBage)
+    }
+    
+    private func calculateHeight() -> (input: CGRect, container: CGRect) {
+        var tfInputFrame = tfInputNode.frame
+        tfInputFrame.size.height = tfInputNode.textView.contentSize.height
+        
+        var inputContainerFrame = inputContainerNode.frame
+        inputContainerFrame.size.height = tfInputNode.textView.contentSize.height + 10
+        return (tfInputFrame, inputContainerFrame)
     }
     
     private func setupConstraint() {
@@ -44,6 +99,7 @@ class ChatViewController: ASViewController<ASDisplayNode> {
         inputContainerNode.view.translatesAutoresizingMaskIntoConstraints = false
         tfInputNode.view.translatesAutoresizingMaskIntoConstraints = false
         btnSend.view.translatesAutoresizingMaskIntoConstraints = false
+        inputContainerHeightConstraint = inputContainerNode.view.heightAnchor.constraint(equalToConstant: 60)
         
         NSLayoutConstraint.activate([
             // MARK: tableNode constraint
@@ -56,7 +112,20 @@ class ChatViewController: ASViewController<ASDisplayNode> {
             inputContainerNode.view.leftAnchor.constraint(equalTo: self.node.view.leftAnchor),
             inputContainerNode.view.rightAnchor.constraint(equalTo: self.node.view.rightAnchor),
             inputContainerNode.view.bottomAnchor.constraint(equalTo: self.node.view.bottomAnchor),
-            inputContainerNode.view.heightAnchor.constraint(equalToConstant: 50)
+            inputContainerHeightConstraint!,
+            
+            // MARK: tfInputNode constraint
+            tfInputNode.view.heightAnchor.constraint(equalToConstant: 40),
+            tfInputNode.view.topAnchor.constraint(equalTo: inputContainerNode.view.topAnchor, constant: 8),
+            tfInputNode.view.bottomAnchor.constraint(equalTo: inputContainerNode.view.bottomAnchor, constant: -8),
+            tfInputNode.view.leadingAnchor.constraint(equalTo: inputContainerNode.view.leadingAnchor, constant: 8),
+            tfInputNode.view.trailingAnchor.constraint(equalTo: btnSend.view.leadingAnchor, constant: 3),
+            
+            // MARK: btnSend constraint
+            btnSend.view.trailingAnchor.constraint(equalTo: inputContainerNode.view.trailingAnchor, constant: 8),
+            btnSend.view.centerYAnchor.constraint(equalTo: inputContainerNode.view.centerYAnchor),
+            btnSend.view.heightAnchor.constraint(equalToConstant: 50),
+            btnSend.view.widthAnchor.constraint(equalToConstant: 50)
         ])
     }
     
