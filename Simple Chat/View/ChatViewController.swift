@@ -42,7 +42,7 @@ class ChatViewController: ASViewController<ASDisplayNode> {
         tfInputNode.attributedPlaceholderText = NSAttributedString(string: "Type something..", attributes: [NSAttributedStringKey.foregroundColor : #colorLiteral(red: 0.8039215803, green: 0.8039215803, blue: 0.8039215803, alpha: 1), NSAttributedStringKey.font: UIFont.systemFont(ofSize: 16)])
         tfInputNode.typingAttributes = [NSAttributedStringKey.font.rawValue: UIFont.systemFont(ofSize: 16), NSAttributedStringKey.foregroundColor.rawValue: UIColor.black]
         tfInputNode.backgroundColor = .white
-        tfInputNode.textContainerInset = UIEdgeInsets(top: 3, left: 8, bottom: 3, right: 8)
+        tfInputNode.textContainerInset = UIEdgeInsets(top: 2, left: 15, bottom: 2, right: 8)
         tfInputNode.clipsToBounds = true
         
         // MARK: btnSend config
@@ -76,18 +76,22 @@ class ChatViewController: ASViewController<ASDisplayNode> {
     }
     
     private func configureInputTextBehavior() {
+        let fontHeight = tfInputNode.textView.font?.lineHeight
         tfInputNode.textView.rx.text.orEmpty.asDriver().skip(1).drive(onNext: { [unowned self] (_) in
-            UIView.animate(withDuration: 0.2, animations: {
-                self.tfInputNode.frame = self.calculateHeight().input
-                self.inputContainerNode.frame = self.calculateHeight().container
-                self.inputContainerHeightConstraint?.constant = self.calculateHeight().container.height
-            })
+            let line = self.tfInputNode.textView.contentSize.height / fontHeight!
+            
+            if line < 4 {
+                UIView.animate(withDuration: 0.1, animations: {
+                    self.inputContainerHeightConstraint?.constant = self.calculateHeight().container.height
+                })
+            }
+            
         }).disposed(by: disposeBage)
     }
     
     private func calculateHeight() -> (input: CGRect, container: CGRect) {
         var tfInputFrame = tfInputNode.frame
-        tfInputFrame.size.height = tfInputNode.textView.contentSize.height
+        tfInputFrame.size.height = tfInputNode.textView.contentSize.height + 2
         
         var inputContainerFrame = inputContainerNode.frame
         inputContainerFrame.size.height = tfInputNode.textView.contentSize.height + 10
@@ -99,7 +103,7 @@ class ChatViewController: ASViewController<ASDisplayNode> {
         inputContainerNode.view.translatesAutoresizingMaskIntoConstraints = false
         tfInputNode.view.translatesAutoresizingMaskIntoConstraints = false
         btnSend.view.translatesAutoresizingMaskIntoConstraints = false
-        inputContainerHeightConstraint = inputContainerNode.view.heightAnchor.constraint(equalToConstant: 60)
+        inputContainerHeightConstraint = inputContainerNode.view.heightAnchor.constraint(equalToConstant: 35)
         
         NSLayoutConstraint.activate([
             // MARK: tableNode constraint
@@ -115,9 +119,8 @@ class ChatViewController: ASViewController<ASDisplayNode> {
             inputContainerHeightConstraint!,
             
             // MARK: tfInputNode constraint
-            tfInputNode.view.heightAnchor.constraint(equalToConstant: 40),
-            tfInputNode.view.topAnchor.constraint(equalTo: inputContainerNode.view.topAnchor, constant: 8),
-            tfInputNode.view.bottomAnchor.constraint(equalTo: inputContainerNode.view.bottomAnchor, constant: -8),
+            tfInputNode.view.topAnchor.constraint(equalTo: inputContainerNode.view.topAnchor, constant: 5),
+            tfInputNode.view.bottomAnchor.constraint(equalTo: inputContainerNode.view.bottomAnchor, constant: -5),
             tfInputNode.view.leadingAnchor.constraint(equalTo: inputContainerNode.view.leadingAnchor, constant: 8),
             tfInputNode.view.trailingAnchor.constraint(equalTo: btnSend.view.leadingAnchor, constant: 3),
             
