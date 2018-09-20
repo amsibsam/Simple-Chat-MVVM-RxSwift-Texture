@@ -9,12 +9,11 @@
 import Foundation
 import RxSwift
 import RxCocoa
-import Firebase
 
 protocol EditProfileViewModel: class {
     var menu: BehaviorRelay<[MenuModel]> { get }
     var isLoading: Driver<Bool> { get }
-    var isSuccess: Driver<User?> { get }
+    var isSuccess: Driver<UserModel?> { get }
     
     func getMenu()
     func update()

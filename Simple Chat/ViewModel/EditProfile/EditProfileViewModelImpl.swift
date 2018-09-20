@@ -9,7 +9,6 @@
 import Foundation
 import RxSwift
 import RxCocoa
-import Firebase
 
 class EditProfileViewModelImpl: EditProfileViewModel {
     var menu: BehaviorRelay<[MenuModel]> {
@@ -22,7 +21,7 @@ class EditProfileViewModelImpl: EditProfileViewModel {
             return varLoading.asDriver()
         }
     }
-    var isSuccess: Driver<User?> {
+    var isSuccess: Driver<UserModel?> {
         get {
             return varSuccess.asDriver()
         }
@@ -31,14 +30,13 @@ class EditProfileViewModelImpl: EditProfileViewModel {
     // MARK: private properties
     private let varMenu: BehaviorRelay<[MenuModel]> = BehaviorRelay(value: [])
     private let varLoading: BehaviorRelay<Bool> = BehaviorRelay(value: false)
-    private let varSuccess: BehaviorRelay<User?> = BehaviorRelay(value: nil)
-    private var isUpdateNameComplete: Bool = false
-    private var isUpdateEmailComplete: Bool = false
+    private let varSuccess: BehaviorRelay<UserModel?> = BehaviorRelay(value: nil)
+    private var service: EditProfileService = EditProfileServiceImpl()
     
     func getMenu() {
         let menuModel = [
-            MenuModel(title: "Display Name", value: Auth.auth().currentUser?.displayName ?? ""),
-            MenuModel(title: "Email", value: Auth.auth().currentUser?.email ?? ""),
+            MenuModel(title: "Display Name", value: service.getCurrentUser().displayName ?? ""),
+            MenuModel(title: "Email", value: service.getCurrentUser().email ?? ""),
             MenuModel(title: "Save", value: "")
         ]
     
@@ -47,34 +45,13 @@ class EditProfileViewModelImpl: EditProfileViewModel {
     
     func update() {
         varLoading.accept(true)
-        let changeRequest = Auth.auth().currentUser?.createProfileChangeRequest()
-        changeRequest?.displayName = menu.value[0].value
-        changeRequest?.commitChanges(completion: { [ weak self ] (error) in
+        let updatedUser: UserModel = FirebaseSharedServices.shared.currentUser
+        updatedUser.displayName = varMenu.value[0].value
+        updatedUser.email = varMenu.value[1].value
+        
+        service.editProfile(user: updatedUser) { [weak self] (updatedUser) in
             self?.varLoading.accept(false)
-            if let errorUpdate = error {
-                print("error update user \(errorUpdate))")
-                self?.varSuccess.accept(nil)
-            } else {
-                self?.isUpdateNameComplete = true
-                self?.checkUpdateStatus()
-            }
-        })
-        Auth.auth().currentUser?.updateEmail(to: menu.value[1].value, completion: { [ weak self ] (error) in
-            self?.varLoading.accept(false)
-            if let errorUpdate = error {
-                print("error update user \(errorUpdate))")
-                self?.varSuccess.accept(nil)
-            } else {
-                self?.isUpdateEmailComplete = true
-                self?.checkUpdateStatus()
-            }
-        })
-    }
-    
-    func checkUpdateStatus() {
-        if isUpdateNameComplete && isUpdateEmailComplete {
-            varLoading.accept(false)
-            varSuccess.accept(Auth.auth().currentUser)
+            self?.varSuccess.accept(updatedUser)
         }
     }
 }

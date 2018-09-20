@@ -7,7 +7,6 @@
 //
 
 import Foundation
-import FirebaseAuth
 import RxSwift
 
 enum LoginError: Error {
@@ -18,15 +17,13 @@ class LoginService {
     
     func login(with phoneNumber: String) -> Single<Bool> {
         return Single.create(subscribe: { (emitter) -> Disposable in
-            PhoneAuthProvider.provider().verifyPhoneNumber(phoneNumber, uiDelegate: nil) { (verificationId, error) in
-                if let id = verificationId {
-                    UserDefaults.standard.saveVerificationId(id)
+            FirebaseSharedServices.shared.login(with: phoneNumber, completion: { (isSuccess) in
+                if isSuccess {
                     emitter(.success(true))
-                } else if let err = error {
-                    emitter(.error(err))
+                } else {
+                    emitter(.error(LoginError.failedToGetId))
                 }
-            }
-            
+            })
             return Disposables.create()
         })
         

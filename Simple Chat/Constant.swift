@@ -7,10 +7,7 @@
 //
 
 import Foundation
-import Firebase
 
 class Constant {
-    static let rootDB: DatabaseReference = Database.database().reference()
     
-    static var chatDB: DatabaseReference = rootDB.child("chats")
 }

@@ -7,25 +7,20 @@
 //
 
 import Foundation
-import FirebaseAuth
 import RxSwift
 import RxCocoa
 
 class VerificationServiceImpl: VerificationService {
     
-    func verifyLogin(with code: String) -> Single<User?> {
+    func verifyLogin(with code: String) -> Single<UserModel?> {
         return Single.create(subscribe: { (emitter) -> Disposable in
-            let credential = PhoneAuthProvider.provider().credential(withVerificationID: UserDefaults.standard.getVerificationId(), verificationCode: code)
-            
-            Auth.auth().signInAndRetrieveData(with: credential) { (result, error) in
-                print("result \(result?.additionalUserInfo?.providerID)")
-                if let errorVerify = error {
+            FirebaseSharedServices.shared.verify(with: code, completion: { (user, error) in
+                if let loggedInUser = user {
+                    emitter(.success(loggedInUser))
+                } else if let errorVerify = error {
                     emitter(.error(errorVerify))
-                } else {
-                    emitter(.success(result?.user))
                 }
-            }
-            
+            })
             return Disposables.create()
         })
         

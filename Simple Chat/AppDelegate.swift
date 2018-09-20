@@ -8,7 +8,6 @@
 
 import UIKit
 import CoreData
-import Firebase
 import IQKeyboardManager
 
 @UIApplicationMain
@@ -18,19 +17,8 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
 
     func application(_ application: UIApplication, didFinishLaunchingWithOptions launchOptions: [UIApplicationLaunchOptionsKey: Any]?) -> Bool {
         configureAppDependency()
-////        let message = [
-////            "name": "from apps",
-////            "sender_id": "\(Date().timeIntervalSince1970)",
-////            "text": "send from iPhone second time"
-////        ]
-////        let chatRef = Constant.chatDB.childByAutoId()
-////        chatRef.setValue(message)
-//
-//        Constant.chatDB.observe(.childAdded) { (snapshot) in
-//            print("data added \(snapshot)")
-//        }
-        if let user = Auth.auth().currentUser {
-            setupAfterLoginWindow(user: user)
+        if FirebaseSharedServices.shared.isLoggedIn {
+            setupAfterLoginWindow(user: FirebaseSharedServices.shared.currentUser)
         } else {
             setupPreloginWindow()
         }
@@ -38,17 +26,14 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
     }
     
     private func configureAppDependency() {
-        // MARK: Firebase - firebase configuration
-        FirebaseApp.configure()
-        
         // MARK: IQKeyboardManager - configuration
         IQKeyboardManager.shared().isEnabled = true
     }
     
-    func setupAfterLoginWindow(user firebaseUser: User) {
+    func setupAfterLoginWindow(user: UserModel) {
         let vc: UIViewController!
-        if firebaseUser.displayName != nil {
-            vc = ChatViewController()
+        if let displayName = user.displayName {
+            vc = displayName.isEmpty ? EditProfileViewController() : ChatViewController()
         } else {
             vc = EditProfileViewController()
         }

@@ -9,7 +9,6 @@
 import Foundation
 import RxCocoa
 import RxSwift
-import Firebase
 
 class VerificationViewModelImpl: VerificationViewModel {
     var isLoading: Driver<Bool> {
@@ -22,7 +21,7 @@ class VerificationViewModelImpl: VerificationViewModel {
             return varErrorMessage.asDriver()
         }
     }
-    var isSuccess: Driver<User?> {
+    var isSuccess: Driver<UserModel?> {
         get {
             return varSuccess.asDriver()
         }
@@ -31,7 +30,7 @@ class VerificationViewModelImpl: VerificationViewModel {
     // MARK: private properties
     private let varLoading: BehaviorRelay<Bool> = BehaviorRelay(value: false)
     private let varErrorMessage: BehaviorRelay<String> = BehaviorRelay(value: "")
-    private let varSuccess: BehaviorRelay<User?> = BehaviorRelay(value: nil)
+    private let varSuccess: BehaviorRelay<UserModel?> = BehaviorRelay(value: nil)
     private let service: VerificationService
     private let disposeBag: DisposeBag = DisposeBag()
     

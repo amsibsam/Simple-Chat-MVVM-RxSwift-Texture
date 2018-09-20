@@ -10,6 +10,7 @@ import Foundation
 import AsyncDisplayKit
 import RxSwift
 import RxCocoa
+import IQKeyboardManager
 
 class ChatViewController: ASViewController<ASDisplayNode> {
     let tableNode: ASTableNode
@@ -18,10 +19,15 @@ class ChatViewController: ASViewController<ASDisplayNode> {
     let btnSend: ASButtonNode
     
     // MARK: private properties
-    private let disposeBage: DisposeBag
+    private let disposeBag: DisposeBag
     private var inputContainerHeightConstraint: NSLayoutConstraint?
+    private var inputContainerBottomConstraint: NSLayoutConstraint?
+    private let viewModel: ChatViewModel
+    private var keyboardHeight: CGFloat = 0.0
+    
     init() {
-        disposeBage = DisposeBag()
+        disposeBag = DisposeBag()
+        viewModel = ChatViewModelImpl()
         tableNode = ASTableNode()
         inputContainerNode = ASDisplayNode()
         tfInputNode = ASEditableTextNode()
@@ -34,6 +40,8 @@ class ChatViewController: ASViewController<ASDisplayNode> {
         // MARK: tableNode config
         tableNode.backgroundColor = .white
         tableNode.view.separatorStyle = .none
+        tableNode.delegate = self
+        tableNode.dataSource = self
         
         // MARK: inputContainerNode config
         inputContainerNode.backgroundColor = .gray
@@ -51,18 +59,58 @@ class ChatViewController: ASViewController<ASDisplayNode> {
         btnSend.addTarget(self, action: #selector(ChatViewController.sendDidTap), forControlEvents: .touchUpInside)
     }
     
+    // MARK: life cylce
     override func viewDidLoad() {
         super.viewDidLoad()
         setupUI()
     }
     
+    override func viewWillDisappear(_ animated: Bool) {
+        super.viewWillDisappear(animated)
+        enableIQKeyboard(enable: true)
+    }
+    
+    override func viewWillAppear(_ animated: Bool) {
+        super.viewWillAppear(animated)
+        enableIQKeyboard(enable: false)
+    }
+    
     // MARK: selector
     @objc func sendDidTap() {
-        print("send message")
+        viewModel.sendMessage(with: tfInputNode.textView.text!)
+        tfInputNode.textView.text = ""
+    }
+    
+    @objc func editDidTap() {
+        self.navigationController?.pushViewController(EditProfileViewController(), animated: true)
+    }
+    
+    @objc func keyboardWillShow(notification: NSNotification) {
+        guard let keyboardSize = (notification.userInfo?[UIKeyboardFrameBeginUserInfoKey] as? NSValue)?.cgRectValue else { return }
+        if self.inputContainerBottomConstraint?.constant == 0 {
+            if keyboardHeight == 0 {
+                keyboardHeight = keyboardSize.height
+            }
+            
+            UIView.animate(withDuration: 1) { [unowned self] in
+                self.inputContainerBottomConstraint?.constant -= self.keyboardHeight
+                self.node.view.layoutIfNeeded()
+            }
+        }
+    }
+    
+    @objc func keyboardWillHide(notification: NSNotification) {
+        UIView.animate(withDuration: 1) { [unowned self] in
+            self.inputContainerBottomConstraint?.constant = 0
+            self.node.view.layoutIfNeeded()
+        }
     }
     
     // MARK: private function
     private func setupUI() {
+        NotificationCenter.default.addObserver(self, selector: #selector(ChatViewController.keyboardWillShow), name: NSNotification.Name.UIKeyboardWillShow, object: nil)
+        NotificationCenter.default.addObserver(self, selector: #selector(ChatViewController.keyboardWillHide), name: NSNotification.Name.UIKeyboardWillHide, object: nil)
+        self.dismissKeyboardWhenTappedAround()
         self.title = "Conversation"
         tableNode.view.tableFooterView = UIView()
         tfInputNode.layer.cornerRadius = 10
@@ -71,11 +119,36 @@ class ChatViewController: ASViewController<ASDisplayNode> {
         self.node.addSubnode(inputContainerNode)
         inputContainerNode.addSubnode(tfInputNode)
         inputContainerNode.addSubnode(btnSend)
+        setupNavigation()
         setupConstraint()
-        configureInputTextBehavior()
+        setupInputTextBehavior()
+        bindModelToView()
     }
     
-    private func configureInputTextBehavior() {
+    private func setupNavigation() {
+        let settingButton = UIBarButtonItem(barButtonSystemItem: UIBarButtonSystemItem.edit, target: self, action: #selector(ChatViewController.editDidTap))
+        
+        self.navigationItem.rightBarButtonItems = [settingButton]
+    }
+    
+    private func bindModelToView() {
+        viewModel.messages.asDriver().drive(onNext: { [weak self] (_) in
+            if let chatVc = self {
+                let newItemIndex = IndexPath(row: chatVc.viewModel.messages.value.count - 1, section: 0)
+                chatVc.tableNode.insertRows(at: [newItemIndex], with: .right)
+                chatVc.tableNode.scrollToRow(at: newItemIndex, at: .bottom, animated: true)
+            }
+        }).disposed(by: disposeBag)
+        
+        viewModel.getMessages()
+    }
+    
+    private func enableIQKeyboard(enable: Bool) {
+        IQKeyboardManager.shared().isEnabled = enable
+        IQKeyboardManager.shared().isEnableAutoToolbar = enable
+    }
+    
+    private func setupInputTextBehavior() {
         let fontHeight = tfInputNode.textView.font?.lineHeight
         tfInputNode.textView.rx.text.orEmpty.asDriver().skip(1).drive(onNext: { [unowned self] (_) in
             let line = self.tfInputNode.textView.contentSize.height / fontHeight!
@@ -86,7 +159,7 @@ class ChatViewController: ASViewController<ASDisplayNode> {
                 })
             }
             
-        }).disposed(by: disposeBage)
+        }).disposed(by: disposeBag)
     }
     
     private func calculateHeight() -> (input: CGRect, container: CGRect) {
@@ -103,7 +176,10 @@ class ChatViewController: ASViewController<ASDisplayNode> {
         inputContainerNode.view.translatesAutoresizingMaskIntoConstraints = false
         tfInputNode.view.translatesAutoresizingMaskIntoConstraints = false
         btnSend.view.translatesAutoresizingMaskIntoConstraints = false
+        
+        // MARK: configurable constraint
         inputContainerHeightConstraint = inputContainerNode.view.heightAnchor.constraint(equalToConstant: 35)
+        inputContainerBottomConstraint = inputContainerNode.view.bottomAnchor.constraint(equalTo: self.node.view.safeAreaLayoutGuide.bottomAnchor)
         
         NSLayoutConstraint.activate([
             // MARK: tableNode constraint
@@ -115,7 +191,7 @@ class ChatViewController: ASViewController<ASDisplayNode> {
             // MARK: inputContainer constaint
             inputContainerNode.view.leftAnchor.constraint(equalTo: self.node.view.leftAnchor),
             inputContainerNode.view.rightAnchor.constraint(equalTo: self.node.view.rightAnchor),
-            inputContainerNode.view.bottomAnchor.constraint(equalTo: self.node.view.bottomAnchor),
+            inputContainerBottomConstraint!,
             inputContainerHeightConstraint!,
             
             // MARK: tfInputNode constraint
@@ -135,4 +211,24 @@ class ChatViewController: ASViewController<ASDisplayNode> {
     required init?(coder aDecoder: NSCoder) {
         fatalError()
     }
+}
+
+extension ChatViewController: ASTableDataSource {
+    func numberOfSections(in tableNode: ASTableNode) -> Int {
+        return 1
+    }
+    
+    func tableNode(_ tableNode: ASTableNode, numberOfRowsInSection section: Int) -> Int {
+        return viewModel.messages.value.count
+    }
+    
+    func tableNode(_ tableNode: ASTableNode, nodeForRowAt indexPath: IndexPath) -> ASCellNode {
+        let cell = TextMessageCell(with: ChatCellViewModelImpl(message: viewModel.messages.value[indexPath.row]))
+        
+        return cell
+    }
+}
+
+extension ChatViewController: ASTableDelegate {
+    
 }
