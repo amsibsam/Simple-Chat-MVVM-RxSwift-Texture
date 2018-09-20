@@ -33,15 +33,29 @@ class EditProfileViewController: ASViewController<ASDisplayNode> {
         bindModelToView()
     }
     
+    override func viewWillAppear(_ animated: Bool) {
+        super.viewWillAppear(animated)
+    }
+    
+    // MARK: selector
+    @objc func signOut() {
+        viewModel.signOut()
+    }
+    
     // MARK: private func
     private func setupUI() {
-        self.navigationController?.navigationBar.isTranslucent = false
+        setupNavigation()
         self.title = "Edit Profile"
         self.node.backgroundColor = .white
         self.node.addSubnode(tableNode)
         self.node.addSubnode(inputContainer)
         setupConstraint()
         configureTableView()
+    }
+    
+    private func setupNavigation() {
+        self.navigationController?.navigationBar.isTranslucent = false
+        self.navigationItem.rightBarButtonItem = UIBarButtonItem(barButtonSystemItem: UIBarButtonSystemItem.action, target: self, action: #selector(EditProfileViewController.signOut))
     }
     
     private func bindModelToView() {
@@ -57,6 +71,11 @@ class EditProfileViewController: ASViewController<ASDisplayNode> {
                 UIApplication.app?.setupAfterLoginWindow(user: updatedUser)
             } else {
                 print("error complete profile ")
+            }
+        }).disposed(by: disposeBag)
+        viewModel.isLoggedOut.drive(onNext: { (success) in
+            if success {
+                UIApplication.app?.setupPreloginWindow()
             }
         }).disposed(by: disposeBag)
     }

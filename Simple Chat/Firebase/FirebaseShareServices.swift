@@ -107,7 +107,6 @@ class FirebaseSharedServices {
     
     func login(with phoneNumber: String, completion: @escaping(Bool) -> Void) {
         PhoneAuthProvider.provider().verifyPhoneNumber(phoneNumber, uiDelegate: nil) { (verificationId, error) in
-            print("error login \(error)")
             if let id = verificationId {
                 UserDefaults.standard.saveVerificationId(id)
                 completion(true)
@@ -117,11 +116,13 @@ class FirebaseSharedServices {
         }
     }
     
-    func logout() {
+    func logout(completion: @escaping (Bool) -> Void) {
         do {
             try Auth.auth().signOut()
+            completion(true)
         } catch let error as NSError {
             print("failed to logout \(error), \(error.userInfo)")
+            completion(false)
         }
     }
     

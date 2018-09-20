@@ -14,7 +14,9 @@ protocol EditProfileViewModel: class {
     var menu: BehaviorRelay<[MenuModel]> { get }
     var isLoading: Driver<Bool> { get }
     var isSuccess: Driver<UserModel?> { get }
+    var isLoggedOut: Driver<Bool> { get }
     
     func getMenu()
     func update()
+    func signOut()
 }

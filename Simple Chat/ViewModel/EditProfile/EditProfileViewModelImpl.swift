@@ -26,11 +26,17 @@ class EditProfileViewModelImpl: EditProfileViewModel {
             return varSuccess.asDriver()
         }
     }
+    var isLoggedOut: Driver<Bool> {
+        get {
+            return varLoggedOut.asDriver()
+        }
+    }
     
     // MARK: private properties
     private let varMenu: BehaviorRelay<[MenuModel]> = BehaviorRelay(value: [])
     private let varLoading: BehaviorRelay<Bool> = BehaviorRelay(value: false)
     private let varSuccess: BehaviorRelay<UserModel?> = BehaviorRelay(value: nil)
+    private let varLoggedOut: BehaviorRelay<Bool> = BehaviorRelay(value: false)
     private var service: EditProfileService = EditProfileServiceImpl()
     
     func getMenu() {
@@ -52,6 +58,12 @@ class EditProfileViewModelImpl: EditProfileViewModel {
         service.editProfile(user: updatedUser) { [weak self] (updatedUser) in
             self?.varLoading.accept(false)
             self?.varSuccess.accept(updatedUser)
+        }
+    }
+    
+    func signOut() {
+        FirebaseSharedServices.shared.logout { [weak self] (success) in
+            self?.varLoggedOut.accept(success)
         }
     }
 }

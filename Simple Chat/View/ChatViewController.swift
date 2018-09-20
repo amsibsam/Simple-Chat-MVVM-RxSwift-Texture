@@ -129,6 +129,7 @@ class ChatViewController: ASViewController<ASDisplayNode> {
         let settingButton = UIBarButtonItem(barButtonSystemItem: UIBarButtonSystemItem.edit, target: self, action: #selector(ChatViewController.editDidTap))
         
         self.navigationItem.rightBarButtonItems = [settingButton]
+        self.navigationItem.backBarButtonItem = UIBarButtonItem(title: "", style: .plain, target: nil, action: nil)
     }
     
     private func bindModelToView() {
