@@ -97,7 +97,6 @@ class ChatViewController: ASViewController<ASDisplayNode> {
                 self.inputContainerBottomConstraint?.isActive = false
                 self.inputContainerUpperBottomConstraint?.isActive = true
                 self.inputContainerUpperBottomConstraint?.constant -= self.keyboardHeight
-            
                 self.node.view.layoutIfNeeded()
             }
         }
