@@ -22,6 +22,7 @@ class ChatViewController: ASViewController<ASDisplayNode> {
     private let disposeBag: DisposeBag
     private var inputContainerHeightConstraint: NSLayoutConstraint?
     private var inputContainerBottomConstraint: NSLayoutConstraint?
+    private var inputContainerUpperBottomConstraint: NSLayoutConstraint?
     private let viewModel: ChatViewModel
     private var keyboardHeight: CGFloat = 0.0
     
@@ -93,7 +94,10 @@ class ChatViewController: ASViewController<ASDisplayNode> {
             }
             
             UIView.animate(withDuration: 1) { [unowned self] in
-                self.inputContainerBottomConstraint?.constant -= self.keyboardHeight
+                self.inputContainerBottomConstraint?.isActive = false
+                self.inputContainerUpperBottomConstraint?.isActive = true
+                self.inputContainerUpperBottomConstraint?.constant -= self.keyboardHeight
+            
                 self.node.view.layoutIfNeeded()
             }
         }
@@ -101,7 +105,9 @@ class ChatViewController: ASViewController<ASDisplayNode> {
     
     @objc func keyboardWillHide(notification: NSNotification) {
         UIView.animate(withDuration: 1) { [unowned self] in
-            self.inputContainerBottomConstraint?.constant = 0
+            self.inputContainerUpperBottomConstraint?.constant = 0
+            self.inputContainerUpperBottomConstraint?.isActive = false
+            self.inputContainerBottomConstraint?.isActive = true
             self.node.view.layoutIfNeeded()
         }
     }
@@ -114,6 +120,8 @@ class ChatViewController: ASViewController<ASDisplayNode> {
         self.title = "Conversation"
         tableNode.view.tableFooterView = UIView()
         tfInputNode.layer.cornerRadius = 10
+        self.node.view.backgroundColor = .gray
+
         
         self.node.addSubnode(tableNode)
         self.node.addSubnode(inputContainerNode)
@@ -181,6 +189,7 @@ class ChatViewController: ASViewController<ASDisplayNode> {
         // MARK: configurable constraint
         inputContainerHeightConstraint = inputContainerNode.view.heightAnchor.constraint(equalToConstant: 35)
         inputContainerBottomConstraint = inputContainerNode.view.bottomAnchor.constraint(equalTo: self.node.view.safeAreaLayoutGuide.bottomAnchor)
+        inputContainerUpperBottomConstraint = inputContainerNode.view.bottomAnchor.constraint(equalTo: self.node.view.bottomAnchor)
         
         NSLayoutConstraint.activate([
             // MARK: tableNode constraint

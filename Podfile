@@ -8,8 +8,8 @@ target 'Simple Chat' do
   # Pods for Simple Chat
   
   #Rx
-  pod 'RxSwift'
-  pod 'RxCocoa'
+  pod 'RxSwift', '4.3.1'
+  pod 'RxCocoa', '4.3.1'
   
   #Firebase
   pod 'Firebase/Core'
